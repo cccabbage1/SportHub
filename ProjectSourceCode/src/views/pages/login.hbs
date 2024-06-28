@@ -1,0 +1,26 @@
+<div id="login-form" class="container">
+    <div class="text-center">
+        <form class="form" action="/login" method="post">
+            <img class="mt-5 mb-3 rounded" src="../resources/img/Sport-Hub.png" alt="Sportshub Logo">
+            <h1 class="h3 mb-3 font-weight-normal"> Sign in to Sportshub!</h1>
+            <div id="username" class = "form-group">
+                <label for="user-id_field">Username</label>
+                <input name = "username" type="text" id="user-id_field" class="form-control" placeholder="user123" required autofocus>
+            </div>
+            <div id="password" class = "form-group">
+                <label for="pwd_field">Password</label>
+                <input name = "password" type="password" id="pwd_field" class="form-control" placeholder="*********" required autofocus>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="remember-me" checked />
+                <label class="form-check-label" for="remember-me"> Remember me </label>
+            </div>
+            <div id="login_button">
+                <button type="submit" aria-describedby="Buttonhelp">Sign In</button>
+                <small id="emailHelp" class="form-text text-muted">
+                    Don't have an account? <a href="/register">Sign up </a> now.
+                </small>
+            </div>
+        </form>
+    </div>
+</div>
