@@ -30,8 +30,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SESSION_SECRET, // Replace with your own secret
-    saveUninitialized: true,
-    resave: true,
+    saveUninitialized: false,
+    resave: false,
   })
 );
 
@@ -56,7 +56,12 @@ db.connect()
     console.log('ERROR', error.message || error);
   });
 
-// -------------------------------------  ROUTES for login.hbs   ----------------------------------------------
+// Middleware to pass user session data to views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+// ------------------------------------- Defining User login credentials --------------------------------------
 const user = {
   user_id: undefined,
   username: undefined,
@@ -66,8 +71,18 @@ const user = {
   email: undefined
 };
 
+// -------------------------------------  ROUTES for home.hbs   ----------------------------------------------
+// ROUTES
+app.get('/', (req, res) => {
+  const sessionUser = req.session.user;
+  res.render('pages/home');
+});
 
+app.get('/register', (req, res) => {
+  res.render('pages/register');
+});
 
+// -------------------------------------  ROUTES for login.hbs   ----------------------------------------------
 app.get('/login', (req, res) => {
   res.render('pages/login');
 });
@@ -90,15 +105,15 @@ app.post('/login', (req, res) => {
       user.email = data.email;
 
       req.session.user = user;
-      req.session.save();
 
-      res.redirect('/');
+      res.redirect('/profile');
     })
     .catch(err => {
       console.log(err);
       res.redirect('/login');
     });
 });
+
 
 // Authentication middleware.
 const auth = (req, res, next) => {
@@ -108,20 +123,30 @@ const auth = (req, res, next) => {
   next();
 };
 
-app.use(auth);
-
-// -------------------------------------  ROUTES for home.hbs   ----------------------------------------------
-
-app.get('/', (req, res) => {
-  res.render('pages/home', {
-    username: req.session.user.username,
-    password: req.session.user.password,
-    first_name: req.session.user.first_name,
-    last_name: req.session.user.last_name,
-    email: req.session.user.email,
-  });
+// Profile route
+app.get('/profile', auth, (req, res) => {
+  res.render('pages/profile');
 });
 
+// Route for sports data
+app.get('/data', (req, res) => {
+  res.render('pages/data');
+});
+
+// Route for stocks
+app.get('/stocks', (req, res) => {
+  res.render('pages/stocks');
+});
+
+// Route for store
+app.get('/store', (req, res) => {
+  res.render('pages/store');
+});
+
+// Apply auth middleware only to marketplace route
+app.get('/marketplace', auth, (req, res) => {
+  res.render('pages/marketplace');
+});
 // -------------------------------------  ROUTES for logout.hbs   ----------------------------------------------
 
 app.get('/logout', (req, res) => {

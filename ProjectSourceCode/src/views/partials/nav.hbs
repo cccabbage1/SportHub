@@ -4,23 +4,23 @@
       <a class="navbar-brand" href="/"></a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a href="/" class = "nav-link">Home</a>
+          <a href="/" class="nav-link">Home</a>
           <!-- TODO: For 'Home', Add a <a> tag with class="nav-link" and href='/' API that navigates to home page if logged in, or login page if not -->
         </li>
         <li class="nav-item">
-            Sports Data
+          <a href="/data" class="nav-link">Sports Data</a>
           <!-- TODO: For 'Sports Data', Add a <a> tag with class="nav-link" and href='/courses' API that navigates to courses page if logged in, or login page if not -->
         </li>
         <li class="nav-item">
-            Stocks
+          <a href="/stocks" class="nav-link">Stocks</a>
           <!-- TODO: For 'Sports Stocks', Add a <a> tag with class="nav-link" and href='/logout' API that navigates to the logout page -->
         </li>
         <li class="nav-item">
-            Marketplace
+          <a href="/marketplace" class="nav-link">Marketplace</a>
           <!-- TODO: For 'Marketplace', Add a <a> tag with class="nav-link" and href='/logout' API that navigates to the logout page -->
         </li>
         <li class="nav-item">
-            Store
+          <a href="/store" class="nav-link">Store</a>
           <!-- TODO: For 'Store', Add a <a> tag with class="nav-link" and href='/logout' API that navigates to the logout page -->
         </li>
       </ul>
@@ -28,14 +28,20 @@
 
     <div class="navbar-collapse collapse order-3 dual-collapse2">
       <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-              <a class="nav-link" href="#">
-                {{username}}
-              </a>
-          </li>
-          <li class = "nav-item">
-            <a href="/logout" class = "nav-link">Logout</a>
-          </li>
+        {{#if user}}
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">
+            {{user.username}}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/logout" class="nav-link">Logout</a>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a href="/login" class="nav-link">Login</a>
+        </li>
+        {{/if}}
       </ul>
     </div>
   </nav>
