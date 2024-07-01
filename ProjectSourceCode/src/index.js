@@ -11,7 +11,8 @@ const hostname = '0.0.0.0';
 const port = 1234;
 
 // -------------------------------------  APP CONFIG   ----------------------------------------------
-
+// Serve static files from the 'src/resources' directory
+app.use('/resources', express.static(path.join(__dirname, 'resources')));
 // Create `ExpressHandlebars` instance and configure the layouts and partials dir.
 const hbs = handlebars.create({
   extname: 'hbs',
